@@ -103,12 +103,14 @@
                                  baseTableName="Formular"
                                  baseColumnNames="id_korisnik_kreirao"
                                  referencedTableName="Korisnik"
-                                 referencedColumnNames="id"/>
+                                 referencedColumnNames="id"
+                                 onDelete="SET NULL"/>
         <addForeignKeyConstraint constraintName="fk_formular_korisnik_azurirao"
                                  baseTableName="Formular"
                                  baseColumnNames="id_korisnik_poslednji_azurirao"
                                  referencedTableName="Korisnik"
-                                 referencedColumnNames="id"/>
+                                 referencedColumnNames="id"
+                                 onDelete="SET NULL"/>
         <addForeignKeyConstraint constraintName="fk_polje_formular"
                                  baseTableName="Polje"
                                  baseColumnNames="id_formular"
@@ -118,7 +120,8 @@
                                  baseTableName="Formular_Popunjen"
                                  baseColumnNames="id_formular"
                                  referencedTableName="Formular"
-                                 referencedColumnNames="id"/>
+                                 referencedColumnNames="id"
+                                 onDelete="SET NULL"/>
         <addForeignKeyConstraint constraintName="fk_polje_popunjeno_formular_popunjen"
                                  baseTableName="polje_popunjeno"
                                  baseColumnNames="id_formular_popunjen"

@@ -2,7 +2,9 @@ package com.heliant.springproject.entiteti;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -11,11 +13,13 @@ import java.util.Set;
 @Table(name = "Formular_Popunjen")
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class FormularPopunjen {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name = "vreme_kreiranja", nullable = false)
     private LocalDateTime vremeKreiranja;

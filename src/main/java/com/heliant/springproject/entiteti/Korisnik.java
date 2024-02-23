@@ -2,7 +2,9 @@ package com.heliant.springproject.entiteti;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -11,6 +13,8 @@ import java.util.Set;
 @Table(name = "Korisnik")
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class Korisnik {
 
     @Id
@@ -34,5 +38,4 @@ public class Korisnik {
 
     @OneToMany(mappedBy = "korisnikAzurirao", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private Set<Formular> azuriraniFormulari;
-
 }
