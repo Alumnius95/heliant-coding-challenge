@@ -1,0 +1,15 @@
+package com.heliant.springproject.bezbednost;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+@Configuration
+public class BezbednosneKonfiguracije {
+
+    @Bean
+    public PasswordEncoder enkoderLozinke() {
+        return new BCryptPasswordEncoder();
+    }
+}

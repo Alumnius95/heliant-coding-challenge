@@ -1,6 +1,5 @@
 package com.heliant.springproject.kontroleri;
 
-import com.heliant.springproject.entiteti.Polje;
 import com.heliant.springproject.entiteti.PoljePopunjeno;
 import com.heliant.springproject.servisi.PoljePopunjenoServis;
 import lombok.AllArgsConstructor;

@@ -1,6 +1,5 @@
 package com.heliant.springproject.kontroleri;
 
-import com.heliant.springproject.entiteti.Formular;
 import com.heliant.springproject.entiteti.FormularPopunjen;
 import com.heliant.springproject.servisi.FormularPopunjenServis;
 import lombok.AllArgsConstructor;

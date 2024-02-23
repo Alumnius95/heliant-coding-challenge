@@ -3,6 +3,7 @@ package com.heliant.springproject.servisi;
 import com.heliant.springproject.entiteti.Korisnik;
 import com.heliant.springproject.repozitorijumi.KorisnikRepozitorijum;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,8 @@ import java.util.Optional;
 public class KorisnikServis {
 
     private final KorisnikRepozitorijum korisnikRepozitorijum;
+    private final PasswordEncoder enkoderLozinke;
+
     @Transactional(readOnly = true)
     public List<Korisnik> nadjiSve() {
         return korisnikRepozitorijum.findAll();
@@ -24,6 +27,7 @@ public class KorisnikServis {
     }
     @Transactional
     public Korisnik sacuvaj(Korisnik korisnik) {
+        korisnik.setLozinka(enkoderLozinke.encode(korisnik.getLozinka()));
         return korisnikRepozitorijum.save(korisnik);
     }
     @Transactional

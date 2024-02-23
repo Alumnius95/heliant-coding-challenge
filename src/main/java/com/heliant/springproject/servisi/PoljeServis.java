@@ -1,6 +1,5 @@
 package com.heliant.springproject.servisi;
 
-import com.heliant.springproject.entiteti.Formular;
 import com.heliant.springproject.entiteti.Polje;
 import com.heliant.springproject.repozitorijumi.PoljeRepozitorijum;
 import lombok.AllArgsConstructor;
