@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/formulari")
+@RequestMapping("/api/v1/formularipopunjeni")
 @AllArgsConstructor
 public class FormularPopunjenKontroler {
 
@@ -22,7 +22,7 @@ public class FormularPopunjenKontroler {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FormularPopunjen> dohvatiKorisnikaKrozId(@PathVariable Long id) {
+    public ResponseEntity<FormularPopunjen> dohvatiPopunjenFormularKrozId(@PathVariable Long id) {
         return formularPopunjenServis.nadjiKrozId(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());

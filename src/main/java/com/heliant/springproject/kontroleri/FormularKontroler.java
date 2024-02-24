@@ -22,7 +22,7 @@ public class FormularKontroler {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Formular> dohvatiKorisnikaKrozId(@PathVariable Long id) {
+    public ResponseEntity<Formular> dohvatiFormularKrozId(@PathVariable Long id) {
         return formularServis.nadjiKrozId(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
