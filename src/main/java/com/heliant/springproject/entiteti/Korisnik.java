@@ -27,6 +27,10 @@ public class Korisnik {
     @Column(nullable = false, length = 256)
     private String lozinka;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private Rola rola;
+
     @Column(name = "vreme_kreiranja", nullable = false)
     private LocalDateTime vremeKreiranja;
 

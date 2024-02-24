@@ -13,6 +13,7 @@
             </column>
             <column name="korisnicko_ime" type="VARCHAR(256)"/>
             <column name="lozinka" type="VARCHAR(256)"/>
+            <column name="rola" type="ENUM('ROLE_ADMIN', 'ROLE_RADNIK')"/>
             <column name="vreme_kreiranja" type="TIMESTAMP"/>
             <column name="vreme_poslednje_izmene" type="TIMESTAMP"/>
         </createTable>
