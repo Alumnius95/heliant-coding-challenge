@@ -50,14 +50,16 @@ public class FormularPopunjenServis {
         formularPopunjen.setId(id);
         formularPopunjen.setVremeIzmene(LocalDateTime.now());
         if (formular.isPresent() && !Objects.equals(formular.get().getId(), id)) {
-            formularPopunjen.setPopunjenaPolja(new HashSet<>());
+            formularPopunjen.setPopunjenaPolja(new HashSet<>()); //setujemo ga na neki drugi formular, time radimo reset polja
         }
         formularPopunjen.setId(id);
         return formularPopunjenRepozitorijum.save(formularPopunjen);
     }
 
     @Transactional
-    public void obrisi(Long id) {
+    public void obrisi(FormularPopunjen formularPopunjen, Long id) {
+        Formular formular = formularPopunjen.getFormular();
+        formular.getPopunjeniFormulari().remove(formularPopunjen);
         formularPopunjenRepozitorijum.deleteById(id);
     }
 }

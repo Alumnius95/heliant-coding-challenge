@@ -39,7 +39,7 @@ public class PoljeServis {
     @Transactional
     public Polje sacuvaj(PoljeDTO poljeDTO, Optional<Formular>formular) {
         if (formular.isEmpty()) {
-            throw new PoljeBezFormularaIzuzetak("Polje ne moze biti kreirano/sacuvano bez postojeceg formulara!");
+            throw new PoljeBezFormularaIzuzetak("Polje ne moze biti azurirano/kreirano/sacuvano bez postojeceg formulara!");
         }
         proveriSlaganjeTipova(poljeDTO);
         Polje polje = PoljeDTO.dtoUOriginal(poljeDTO, new Polje());
@@ -49,11 +49,18 @@ public class PoljeServis {
 
     @Transactional
     public Polje azuriraj(PoljeDTO poljeDTO, Optional<Formular> formular, Long id) {
+        if (formular.isEmpty()) {
+            throw new PoljeBezFormularaIzuzetak("Polje ne moze biti azurirano/kreirano/sacuvano bez postojeceg formulara!");
+        }
         proveriSlaganjeTipova(poljeDTO);
         Polje polje = dtoUOriginal(poljeDTO, new Polje());
         polje.setId(id);
         formular.ifPresent(polje::setFormular);
         polje.setVremePoslednjeIzmene(LocalDateTime.now());
+        formular.get().setVremeIzmene(LocalDateTime.now());
+        formular.get().getPolja().removeIf(polje1 -> polje1.getId().equals(id) && (!polje1.getNaziv().equals(poljeDTO.getNaziv())
+        || !polje1.getTip().equals(poljeDTO.getTip())));
+        formular.get().getPolja().add(polje);
         return poljeRepozitorijum.save(polje);
     }
 

@@ -53,10 +53,11 @@ public class FormularPopunjenKontroler {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> obrisiPopunjenFormular(@PathVariable Long id) {
-        if (formularPopunjenServis.nadjiKrozId(id).isEmpty()) {
+        Optional<FormularPopunjen> formularPopunjen = formularPopunjenServis.nadjiKrozId(id);
+        if (formularPopunjen.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        formularPopunjenServis.obrisi(id);
+        formularPopunjenServis.obrisi(formularPopunjen.get(),id);
         return ResponseEntity.noContent().build();
     }
 }

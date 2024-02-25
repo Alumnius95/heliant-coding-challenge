@@ -44,6 +44,9 @@ public class PoljePopunjenoServis {
         }
         proveriSlaganjeTipova(poljePopunjenoDTO, polje.get());
         PoljePopunjeno poljePopunjeno = PoljePopunjenoDTO.dtoUOriginal(poljePopunjenoDTO, new PoljePopunjeno());
+        poljePopunjeno.setFormularPopunjen(formularPopunjen.get());
+        formularPopunjen.get().getPopunjenaPolja().add(poljePopunjeno);
+        formularPopunjen.get().setVremeIzmene(LocalDateTime.now());
         return poljePopunjenoRepozitorijum.save(poljePopunjeno);
     }
 
@@ -58,15 +61,28 @@ public class PoljePopunjenoServis {
         }
         proveriSlaganjeTipova(poljePopunjenoDTO, polje.get());
         PoljePopunjeno poljePopunjeno = PoljePopunjenoDTO.dtoUOriginal(poljePopunjenoDTO, new PoljePopunjeno());
+        poljePopunjeno.setFormularPopunjen(formularPopunjen.get());
         poljePopunjeno.setId(id);
         poljePopunjeno.setVremeIzmene(LocalDateTime.now());
-        formularPopunjen.ifPresent(poljePopunjeno::setFormularPopunjen);
-        polje.ifPresent(poljePopunjeno::setPolje);
+        poljePopunjeno.setFormularPopunjen(formularPopunjen.get());
+        poljePopunjeno.setPolje(polje.get());
+        formularPopunjen.get().getPopunjenaPolja().removeIf(poljePopunjeno1 -> poljePopunjeno1.getId().equals(id)
+                && (!poljePopunjeno1.getVrednostTekst().equals(poljePopunjenoDTO.getVrednostTekst()) ||
+                !poljePopunjeno1.getVrednostBroj().equals(poljePopunjenoDTO.getVrednostBroj())));
+        formularPopunjen.get().getPopunjenaPolja().add(poljePopunjeno);
+        polje.get().getPopunjenaPolja().removeIf(poljePopunjeno1 -> poljePopunjeno1.getId().equals(id)
+                && (!poljePopunjeno1.getVrednostTekst().equals(poljePopunjenoDTO.getVrednostTekst()) ||
+                !poljePopunjeno1.getVrednostBroj().equals(poljePopunjenoDTO.getVrednostBroj())));
+        polje.get().getPopunjenaPolja().add(poljePopunjeno);
         return poljePopunjenoRepozitorijum.save(poljePopunjeno);
     }
 
     @Transactional
-    public void obrisi(Long id) {
+    public void obrisi(PoljePopunjeno poljePopunjeno,Long id) {
+        FormularPopunjen formularPopunjen = poljePopunjeno.getFormularPopunjen();
+        formularPopunjen.getPopunjenaPolja().remove(poljePopunjeno);
+        Polje polje = poljePopunjeno.getPolje();
+        polje.getPopunjenaPolja().remove(poljePopunjeno);
         poljePopunjenoRepozitorijum.deleteById(id);
     }
 

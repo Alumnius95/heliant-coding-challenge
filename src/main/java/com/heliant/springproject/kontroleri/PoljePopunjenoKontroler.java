@@ -38,7 +38,7 @@ public class PoljePopunjenoKontroler {
     }
 
     @PostMapping
-    public ResponseEntity<PoljePopunjeno> kreirajPolje(@Valid @RequestBody PoljePopunjenoDTO poljePopunjenoDTO) {
+    public ResponseEntity<PoljePopunjeno> kreirajPoljePopunjeno(@Valid @RequestBody PoljePopunjenoDTO poljePopunjenoDTO) {
         Optional<FormularPopunjen> formularPopunjen = formularPopunjenServisServis.nadjiKrozId(poljePopunjenoDTO.getIdFormularPopunjen());
         Optional<Polje> polje = poljeServis.nadjiKrozId(poljePopunjenoDTO.getIdPolje());
         PoljePopunjeno sacuvanoPopunjenoPolje = poljePopunjenoServis.sacuvaj(poljePopunjenoDTO,formularPopunjen, polje);
@@ -46,7 +46,7 @@ public class PoljePopunjenoKontroler {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PoljePopunjeno> azurirajPolje(@PathVariable Long id, @Valid @RequestBody PoljePopunjenoDTO poljePopunjenoDTO) {
+    public ResponseEntity<PoljePopunjeno> azurirajPoljePopunjeno(@PathVariable Long id, @Valid @RequestBody PoljePopunjenoDTO poljePopunjenoDTO) {
         Optional<FormularPopunjen> formularPopunjen = formularPopunjenServisServis.nadjiKrozId(poljePopunjenoDTO.getIdFormularPopunjen());
         Optional<Polje> polje = poljeServis.nadjiKrozId(poljePopunjenoDTO.getIdPolje());
         if (poljePopunjenoServis.nadjiKrozId(id).isEmpty()) {
@@ -57,11 +57,12 @@ public class PoljePopunjenoKontroler {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> obrisiPolje(@PathVariable Long id) {
-        if (poljePopunjenoServis.nadjiKrozId(id).isEmpty()) {
+    public ResponseEntity<Void> obrisiPoljePopunjeno(@PathVariable Long id) {
+        Optional<PoljePopunjeno> poljePopunjeno = poljePopunjenoServis.nadjiKrozId(id);
+        if (poljePopunjeno.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        poljePopunjenoServis.obrisi(id);
+        poljePopunjenoServis.obrisi(poljePopunjeno.get(),id);
         return ResponseEntity.noContent().build();
     }
 }

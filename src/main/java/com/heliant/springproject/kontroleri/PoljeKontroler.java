@@ -47,7 +47,7 @@ public class PoljeKontroler {
         if (poljeServis.nadjiKrozId(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        Polje azuriranoPolje = poljeServis.azuriraj(poljeDTO, formular, id);
+        Polje azuriranoPolje = poljeServis.azuriraj(poljeDTO, formular,id);
         return ResponseEntity.ok(azuriranoPolje);
     }
 
