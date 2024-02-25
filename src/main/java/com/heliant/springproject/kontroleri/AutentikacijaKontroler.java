@@ -28,8 +28,8 @@ public class AutentikacijaKontroler {
     public ResponseEntity<JwtAutentikacioniOdgovor> authenticateUser(@Valid @RequestBody LoginDTO loginZahtev) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        loginZahtev.getKorisnickoIme(),
-                        loginZahtev.getLozinka()
+                        loginZahtev.korisnickoIme(),
+                        loginZahtev.lozinka()
                 )
         );
 

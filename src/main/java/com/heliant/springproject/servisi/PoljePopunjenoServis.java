@@ -60,20 +60,24 @@ public class PoljePopunjenoServis {
             throw new PoljePopunjenoBezPoljaIzuzetak("PoljePopunjeno ne moze biti kreirano/sacuvano bez polja kojem pripada!");
         }
         proveriSlaganjeTipova(poljePopunjenoDTO, polje.get());
+
         PoljePopunjeno poljePopunjeno = PoljePopunjenoDTO.dtoUOriginal(poljePopunjenoDTO, new PoljePopunjeno());
         poljePopunjeno.setFormularPopunjen(formularPopunjen.get());
         poljePopunjeno.setId(id);
         poljePopunjeno.setVremeIzmene(LocalDateTime.now());
         poljePopunjeno.setFormularPopunjen(formularPopunjen.get());
         poljePopunjeno.setPolje(polje.get());
+
         formularPopunjen.get().getPopunjenaPolja().removeIf(poljePopunjeno1 -> poljePopunjeno1.getId().equals(id)
-                && (!poljePopunjeno1.getVrednostTekst().equals(poljePopunjenoDTO.getVrednostTekst()) ||
-                !poljePopunjeno1.getVrednostBroj().equals(poljePopunjenoDTO.getVrednostBroj())));
+                && (!poljePopunjeno1.getVrednostTekst().equals(poljePopunjenoDTO.vrednostTekst()) ||
+                !poljePopunjeno1.getVrednostBroj().equals(poljePopunjenoDTO.vrednostBroj())));
         formularPopunjen.get().getPopunjenaPolja().add(poljePopunjeno);
+
         polje.get().getPopunjenaPolja().removeIf(poljePopunjeno1 -> poljePopunjeno1.getId().equals(id)
-                && (!poljePopunjeno1.getVrednostTekst().equals(poljePopunjenoDTO.getVrednostTekst()) ||
-                !poljePopunjeno1.getVrednostBroj().equals(poljePopunjenoDTO.getVrednostBroj())));
+                && (!poljePopunjeno1.getVrednostTekst().equals(poljePopunjenoDTO.vrednostTekst()) ||
+                !poljePopunjeno1.getVrednostBroj().equals(poljePopunjenoDTO.vrednostBroj())));
         polje.get().getPopunjenaPolja().add(poljePopunjeno);
+
         return poljePopunjenoRepozitorijum.save(poljePopunjeno);
     }
 
@@ -88,11 +92,11 @@ public class PoljePopunjenoServis {
 
     private static void proveriSlaganjeTipova(PoljePopunjenoDTO poljePopunjenoDTO, Polje polje) {
         if (polje.getTip() == Tip.TEXT) {
-            if (poljePopunjenoDTO.getVrednostTekst() == null || poljePopunjenoDTO.getVrednostBroj() != null) {
+            if (poljePopunjenoDTO.vrednostTekst() == null || poljePopunjenoDTO.vrednostBroj() != null) {
                 throw new NevalidnoSlaganjeTipovaPoljaIzuzetak("Popunjeno polje ima unet razlicit tip vrednosti od parent polja - MORA TEXT");
             }
         } else if (polje.getTip() == Tip.BROJ) {
-            if (poljePopunjenoDTO.getVrednostTekst() != null || poljePopunjenoDTO.getVrednostBroj() == null) {
+            if (poljePopunjenoDTO.vrednostTekst() != null || poljePopunjenoDTO.vrednostBroj() == null) {
                 throw new NevalidnoSlaganjeTipovaPoljaIzuzetak("Popunjeno polje ima unet razlicit tip vrednosti od parent polja - MORA BROJ");
             }
         }

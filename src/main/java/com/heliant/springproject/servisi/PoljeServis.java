@@ -59,7 +59,7 @@ public class PoljeServis {
         polje.setVremePoslednjeIzmene(LocalDateTime.now());
         formular.get().setVremeIzmene(LocalDateTime.now());
         formular.get().getPolja().removeIf(polje1 -> polje1.getId().equals(id) && (!polje1.getNaziv().equals(poljeDTO.getNaziv())
-        || !polje1.getTip().equals(poljeDTO.getTip())));
+        || !polje1.getTip().equals(poljeDTO.tip())));
         formular.get().getPolja().add(polje);
         return poljeRepozitorijum.save(polje);
     }
@@ -73,17 +73,17 @@ public class PoljeServis {
     }
 
     private static void proveriSlaganjeTipova(PoljeDTO poljeDTO) {
-        if (!poljeDTO.getPoljaPopunjenaDTO().isEmpty()) {
-            if (poljeDTO.getTip() == Tip.TEXT) {
-                for (PoljePopunjenoDTO poljePopunjenoDTO : poljeDTO.getPoljaPopunjenaDTO()) {
-                    if (poljePopunjenoDTO.getVrednostTekst() == null || poljePopunjenoDTO.getVrednostBroj() != null) {
+        if (!poljeDTO.poljaPopunjenaDTO().isEmpty()) {
+            if (poljeDTO.tip() == Tip.TEXT) {
+                for (PoljePopunjenoDTO poljePopunjenoDTO : poljeDTO.poljaPopunjenaDTO()) {
+                    if (poljePopunjenoDTO.vrednostTekst() == null || poljePopunjenoDTO.vrednostBroj() != null) {
                         throw new NevalidnoSlaganjeTipovaPoljaIzuzetak("Kada je polje TEKST tipa onda ni " +
                                 "jedno polje u setu ne sme biti null ILI broj ne sme postojati");
                     }
                 }
-            } else if (poljeDTO.getTip() == Tip.BROJ) {
-                for (PoljePopunjenoDTO poljePopunjenoDTO : poljeDTO.getPoljaPopunjenaDTO()) {
-                    if (poljePopunjenoDTO.getVrednostTekst() == null || poljePopunjenoDTO.getVrednostBroj() != null) {
+            } else if (poljeDTO.tip() == Tip.BROJ) {
+                for (PoljePopunjenoDTO poljePopunjenoDTO : poljeDTO.poljaPopunjenaDTO()) {
+                    if (poljePopunjenoDTO.vrednostTekst() == null || poljePopunjenoDTO.vrednostBroj() != null) {
                         throw new NevalidnoSlaganjeTipovaPoljaIzuzetak("Kada je polje BROJ tipa onda ni " +
                                 "jedno polje u setu ne sme biti null ILI tekst ne sme postojati");
                     }

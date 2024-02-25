@@ -36,14 +36,14 @@ public class PoljeKontroler {
 
     @PostMapping
     public ResponseEntity<Polje> kreirajPolje(@Valid @RequestBody PoljeDTO poljeDTO) {
-        Optional<Formular> formular = formularServis.nadjiKrozId(poljeDTO.getFormularId());
+        Optional<Formular> formular = formularServis.nadjiKrozId(poljeDTO.formularId());
         Polje sacuvanoPolje = poljeServis.sacuvaj(poljeDTO, formular);
         return ResponseEntity.status(HttpStatus.CREATED).body(sacuvanoPolje);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Polje> azurirajPolje(@PathVariable Long id, @Valid @RequestBody PoljeDTO poljeDTO) {
-        Optional<Formular> formular = formularServis.nadjiKrozId(poljeDTO.getFormularId());
+        Optional<Formular> formular = formularServis.nadjiKrozId(poljeDTO.formularId());
         if (poljeServis.nadjiKrozId(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }

@@ -57,8 +57,8 @@ public class FormularPopunjenServis {
         if (formular.isEmpty()) {
             throw new FormularPopunjenIzuzetak("FormularPopunjen mora biti vezan za validan/postojeci formular!");
         }
-        for (PoljePopunjenoDTO poljePopunjenoDTO: formularPopunjenDTO.getPoljaPopunjenaDTO()){
-            Optional<Polje> polje = poljeServis.nadjiKrozId(poljePopunjenoDTO.getIdPolje());
+        for (PoljePopunjenoDTO poljePopunjenoDTO: formularPopunjenDTO.poljaPopunjenaDTO()){
+            Optional<Polje> polje = poljeServis.nadjiKrozId(poljePopunjenoDTO.idPolje());
             if (polje.isEmpty()) {
                 throw new PoljePopunjenoBezPoljaIzuzetak("Popunjeno polje mora biti vezano za postojeci ID polja!");
             }

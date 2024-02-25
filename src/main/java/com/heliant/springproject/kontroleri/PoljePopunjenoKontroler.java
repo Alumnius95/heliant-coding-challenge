@@ -39,16 +39,16 @@ public class PoljePopunjenoKontroler {
 
     @PostMapping
     public ResponseEntity<PoljePopunjeno> kreirajPoljePopunjeno(@Valid @RequestBody PoljePopunjenoDTO poljePopunjenoDTO) {
-        Optional<FormularPopunjen> formularPopunjen = formularPopunjenServisServis.nadjiKrozId(poljePopunjenoDTO.getIdFormularPopunjen());
-        Optional<Polje> polje = poljeServis.nadjiKrozId(poljePopunjenoDTO.getIdPolje());
+        Optional<FormularPopunjen> formularPopunjen = formularPopunjenServisServis.nadjiKrozId(poljePopunjenoDTO.idFormularPopunjen());
+        Optional<Polje> polje = poljeServis.nadjiKrozId(poljePopunjenoDTO.idPolje());
         PoljePopunjeno sacuvanoPopunjenoPolje = poljePopunjenoServis.sacuvaj(poljePopunjenoDTO,formularPopunjen, polje);
         return ResponseEntity.status(HttpStatus.CREATED).body(sacuvanoPopunjenoPolje);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<PoljePopunjeno> azurirajPoljePopunjeno(@PathVariable Long id, @Valid @RequestBody PoljePopunjenoDTO poljePopunjenoDTO) {
-        Optional<FormularPopunjen> formularPopunjen = formularPopunjenServisServis.nadjiKrozId(poljePopunjenoDTO.getIdFormularPopunjen());
-        Optional<Polje> polje = poljeServis.nadjiKrozId(poljePopunjenoDTO.getIdPolje());
+        Optional<FormularPopunjen> formularPopunjen = formularPopunjenServisServis.nadjiKrozId(poljePopunjenoDTO.idFormularPopunjen());
+        Optional<Polje> polje = poljeServis.nadjiKrozId(poljePopunjenoDTO.idPolje());
         if (poljePopunjenoServis.nadjiKrozId(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
