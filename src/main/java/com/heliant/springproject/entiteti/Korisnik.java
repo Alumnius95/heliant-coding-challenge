@@ -24,11 +24,11 @@ public class Korisnik {
     @Column(name = "korisnicko_ime", nullable = false, unique = true, length = 256)
     private String korisnickoIme;
 
-    @Column(nullable = false, length = 256)
+    @Column(name = "lozinka",nullable = false, length = 256)
     private String lozinka;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
+    @Column(name = "rola", nullable = false, length = 20)
     private Rola rola;
 
     @Column(name = "vreme_kreiranja", nullable = false)

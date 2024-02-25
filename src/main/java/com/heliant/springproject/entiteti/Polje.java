@@ -21,10 +21,10 @@ public class Polje {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 256)
+    @Column(name = "naziv", nullable = false, length = 256)
     private String naziv;
 
-    @Column(name = "prikazni_redosled")
+    @Column(name = "prikazni_redosled", nullable = false)
     private Integer prikazniRedosled;
 
     @Column(name = "vreme_kreiranja", nullable = false)

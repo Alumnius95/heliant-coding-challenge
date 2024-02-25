@@ -21,7 +21,7 @@ public class Formular {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 256)
+    @Column(name = "naziv", nullable = false, length = 256)
     private String naziv;
 
     @Column(name = "vreme_kreiranja", nullable = false)
