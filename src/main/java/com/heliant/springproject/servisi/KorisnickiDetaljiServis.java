@@ -18,7 +18,7 @@ public class KorisnickiDetaljiServis implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String korisnickoIme) throws UsernameNotFoundException {
-        Korisnik korisnik = korisnikRepozitorijum.findByUsername(korisnickoIme)
+        Korisnik korisnik = korisnikRepozitorijum.findByKorisnickoIme(korisnickoIme)
                 .orElseThrow(() -> new KorisnickoImeIzuzetak("Korisnik sa datim korisnickim imenom nije pronadjen!"));
 
         return KorisnikPrincipal.kreirajPrincipala(korisnik);

@@ -24,7 +24,7 @@ public class KorisnikServis {
 
     @Transactional(readOnly = true)
     public Optional<Korisnik> nadjiPremaKorisnickomImenu(String korisnickoIme) {
-        return korisnikRepozitorijum.findByUsername(korisnickoIme);
+        return korisnikRepozitorijum.findByKorisnickoIme(korisnickoIme);
     }
     @Transactional(readOnly = true)
     public Optional<Korisnik> nadjiKrozId(Long id) {

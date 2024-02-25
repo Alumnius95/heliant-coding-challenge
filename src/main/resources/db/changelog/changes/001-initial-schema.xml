@@ -29,7 +29,7 @@
             <column name="vreme_kreiranja" type="TIMESTAMP"/>
             <column name="vreme_poslednje_izmene" type="TIMESTAMP"/>
             <column name="id_korisnik_kreirao" type="INT">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
             <column name="id_korisnik_poslednji_azurirao" type="INT">
                 <constraints nullable="true"/>
@@ -61,7 +61,7 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="id_formular" type="INT">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
             <column name="vreme_kreiranja" type="TIMESTAMP"/>
             <column name="vreme_poslednje_izmene" type="TIMESTAMP"/>

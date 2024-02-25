@@ -20,13 +20,13 @@ public class StatistikaServis {
     private StatistikaRepozitorijum statistikaRepozitorijum;
 
     @Scheduled(cron = "0 0 0 * * ?") // pokrece se svaki dan u ponoc
-    public void generateDailyStatistics() {
+    public void generisiStatistiku() {
         // racunanje pocetka i kraja prethodnog dana
-        LocalDateTime startOfPreviousDay = LocalDateTime.of(LocalDate.now().minusDays(1), LocalTime.MIN);
-        LocalDateTime endOfPreviousDay = LocalDateTime.of(LocalDate.now().minusDays(1), LocalTime.MAX);
+        LocalDateTime startPrethodnogDana = LocalDateTime.of(LocalDate.now().minusDays(1), LocalTime.MIN);
+        LocalDateTime krajPrethodnogDana = LocalDateTime.of(LocalDate.now().minusDays(1), LocalTime.MAX);
 
         // prebroj popunjene forme prethodnog dana
-        int count = formularPopunjenRepozitorijum.prebrojiPopunjenePrethodnogDana(startOfPreviousDay, endOfPreviousDay);
+        int count = formularPopunjenRepozitorijum.prebrojiPopunjenePrethodnogDana(startPrethodnogDana, krajPrethodnogDana);
 
         // Napravi statistiku i sacuvaj je
         Statistika statistika = new Statistika();
