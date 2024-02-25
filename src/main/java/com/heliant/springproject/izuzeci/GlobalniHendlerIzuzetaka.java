@@ -28,4 +28,22 @@ public class GlobalniHendlerIzuzetaka {
         return new ResponseEntity<>(errorOdgovor, errorOdgovor.getHttpStatus());
     }
 
+    @ExceptionHandler(PoljeBezFormularaIzuzetak.class)
+    public ResponseEntity<ErrorOdgovor>hendlujNevalidanTokenIzuzetak(PoljeBezFormularaIzuzetak poljeBezFormularaIzuzetak) {
+        ErrorOdgovor errorOdgovor = new ErrorOdgovor(poljeBezFormularaIzuzetak.getMessage(), HttpStatus.BAD_REQUEST, LocalDateTime.now());
+        return new ResponseEntity<>(errorOdgovor, errorOdgovor.getHttpStatus());
+    }
+
+    @ExceptionHandler(NevalidnoSlaganjeTipovaPoljaIzuzetak.class)
+    public ResponseEntity<ErrorOdgovor>hendlujNevalidanTokenIzuzetak(NevalidnoSlaganjeTipovaPoljaIzuzetak poljeBezFormularaIzuzetak) {
+        ErrorOdgovor errorOdgovor = new ErrorOdgovor(poljeBezFormularaIzuzetak.getMessage(), HttpStatus.BAD_REQUEST, LocalDateTime.now());
+        return new ResponseEntity<>(errorOdgovor, errorOdgovor.getHttpStatus());
+    }
+
+    @ExceptionHandler(FormularPopunjenIzuzetak.class)
+    public ResponseEntity<ErrorOdgovor>hendlujNevalidanTokenIzuzetak(FormularPopunjenIzuzetak formularPopunjenIzuzetak) {
+        ErrorOdgovor errorOdgovor = new ErrorOdgovor(formularPopunjenIzuzetak.getMessage(), HttpStatus.BAD_REQUEST, LocalDateTime.now());
+        return new ResponseEntity<>(errorOdgovor, errorOdgovor.getHttpStatus());
+    }
+
 }
