@@ -26,8 +26,6 @@ public class PoljePopunjenoDTO {
     private Double vrednostBroj;
 
     public static PoljePopunjeno dtoUOriginal(PoljePopunjenoDTO poljePopunjenoDTO, PoljePopunjeno poljePopunjeno) {
-        poljePopunjeno.setIdPolja(poljePopunjenoDTO.getIdPolje());
-        poljePopunjeno.setIdFormularaPopunjenog(poljePopunjenoDTO.getIdFormularPopunjen());
         poljePopunjeno.setVrednostBroj(poljePopunjenoDTO.getVrednostBroj());
         poljePopunjeno.setVrednostTekst(poljePopunjenoDTO.getVrednostTekst());
         poljePopunjeno.setVremeKreiranja(LocalDateTime.now());

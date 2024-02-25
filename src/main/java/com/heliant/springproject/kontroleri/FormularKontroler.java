@@ -1,13 +1,16 @@
 package com.heliant.springproject.kontroleri;
 
+import com.heliant.springproject.dto.FormularDTO;
 import com.heliant.springproject.entiteti.Formular;
 import com.heliant.springproject.servisi.FormularServis;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/v1/formulari")
@@ -29,18 +32,17 @@ public class FormularKontroler {
     }
 
     @PostMapping
-    public ResponseEntity<Formular> kreirajFormular(@RequestBody Formular formular) {
-        Formular sacuvaniFormular = formularServis.sacuvaj(formular);
+    public ResponseEntity<Formular> kreirajFormular(@Valid @RequestBody FormularDTO formularDTO) {
+        Formular sacuvaniFormular = formularServis.sacuvaj(formularDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(sacuvaniFormular);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Formular> azurirajFormular(@PathVariable Long id, @RequestBody Formular formular) {
+    public ResponseEntity<Formular> azurirajFormular(@PathVariable Long id, @Valid @RequestBody FormularDTO formularDTO) {
         if (formularServis.nadjiKrozId(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        formular.setId(id);
-        Formular azuriranFormular = formularServis.azuriraj(formular);
+        Formular azuriranFormular = formularServis.azuriraj(id,formularDTO);
         return ResponseEntity.ok(azuriranFormular);
     }
 
@@ -52,5 +54,4 @@ public class FormularKontroler {
         formularServis.obrisi(id);
         return ResponseEntity.noContent().build();
     }
-
 }

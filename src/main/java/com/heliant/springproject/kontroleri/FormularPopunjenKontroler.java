@@ -1,13 +1,18 @@
 package com.heliant.springproject.kontroleri;
 
+import com.heliant.springproject.dto.FormularPopunjenDTO;
+import com.heliant.springproject.entiteti.Formular;
 import com.heliant.springproject.entiteti.FormularPopunjen;
 import com.heliant.springproject.servisi.FormularPopunjenServis;
+import com.heliant.springproject.servisi.FormularServis;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/formularipopunjeni")
@@ -15,6 +20,7 @@ import java.util.List;
 public class FormularPopunjenKontroler {
 
     private final FormularPopunjenServis formularPopunjenServis;
+    private final FormularServis formularServis;
 
     @GetMapping
     public ResponseEntity<List<FormularPopunjen>> dohvatiSveFormulare() {
@@ -29,18 +35,19 @@ public class FormularPopunjenKontroler {
     }
 
     @PostMapping
-    public ResponseEntity<FormularPopunjen> kreirajFormular(@RequestBody FormularPopunjen formularPopunjen) {
-        FormularPopunjen sacuvaniPopunjeniFormular = formularPopunjenServis.sacuvaj(formularPopunjen);
+    public ResponseEntity<FormularPopunjen> kreirajFormular(@Valid @RequestBody FormularPopunjenDTO formularPopunjenDTO) {
+        Optional<Formular> formular = formularServis.nadjiKrozId(formularPopunjenDTO.getFormularId());
+        FormularPopunjen sacuvaniPopunjeniFormular = formularPopunjenServis.sacuvaj(formularPopunjenDTO, formular);
         return ResponseEntity.status(HttpStatus.CREATED).body(sacuvaniPopunjeniFormular);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<FormularPopunjen> azurirajFormular(@PathVariable Long id, @RequestBody FormularPopunjen formularPopunjen) {
+    public ResponseEntity<FormularPopunjen> azurirajFormular(@PathVariable Long id, @Valid @RequestBody FormularPopunjenDTO formularPopunjenDTO) {
+        Optional<Formular> formular = formularServis.nadjiKrozId(formularPopunjenDTO.getFormularId());
         if (formularPopunjenServis.nadjiKrozId(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        formularPopunjen.setId(id);
-        FormularPopunjen azuriranFormular = formularPopunjenServis.azuriraj(formularPopunjen);
+        FormularPopunjen azuriranFormular = formularPopunjenServis.azuriraj(formularPopunjenDTO, formular, id);
         return ResponseEntity.ok(azuriranFormular);
     }
 

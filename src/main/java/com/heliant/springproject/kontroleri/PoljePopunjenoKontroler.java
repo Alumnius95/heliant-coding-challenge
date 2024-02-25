@@ -1,13 +1,20 @@
 package com.heliant.springproject.kontroleri;
 
+import com.heliant.springproject.dto.PoljePopunjenoDTO;
+import com.heliant.springproject.entiteti.FormularPopunjen;
+import com.heliant.springproject.entiteti.Polje;
 import com.heliant.springproject.entiteti.PoljePopunjeno;
+import com.heliant.springproject.servisi.FormularPopunjenServis;
 import com.heliant.springproject.servisi.PoljePopunjenoServis;
+import com.heliant.springproject.servisi.PoljeServis;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/popunjenapolja")
@@ -15,6 +22,8 @@ import java.util.List;
 public class PoljePopunjenoKontroler {
 
     private final PoljePopunjenoServis poljePopunjenoServis;
+    private final PoljeServis poljeServis;
+    private final FormularPopunjenServis formularPopunjenServisServis;
 
     @GetMapping
     public ResponseEntity<List<PoljePopunjeno>> dohvatiSvaPopunjenaPolja() {
@@ -29,18 +38,21 @@ public class PoljePopunjenoKontroler {
     }
 
     @PostMapping
-    public ResponseEntity<PoljePopunjeno> kreirajPolje(@RequestBody PoljePopunjeno poljePopunjeno) {
-        PoljePopunjeno sacuvanoPopunjenoPolje = poljePopunjenoServis.sacuvaj(poljePopunjeno);
+    public ResponseEntity<PoljePopunjeno> kreirajPolje(@Valid @RequestBody PoljePopunjenoDTO poljePopunjenoDTO) {
+        Optional<FormularPopunjen> formularPopunjen = formularPopunjenServisServis.nadjiKrozId(poljePopunjenoDTO.getIdFormularPopunjen());
+        Optional<Polje> polje = poljeServis.nadjiKrozId(poljePopunjenoDTO.getIdPolje());
+        PoljePopunjeno sacuvanoPopunjenoPolje = poljePopunjenoServis.sacuvaj(poljePopunjenoDTO,formularPopunjen, polje);
         return ResponseEntity.status(HttpStatus.CREATED).body(sacuvanoPopunjenoPolje);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PoljePopunjeno> azurirajPolje(@PathVariable Long id, @RequestBody PoljePopunjeno poljePopunjeno) {
+    public ResponseEntity<PoljePopunjeno> azurirajPolje(@PathVariable Long id, @Valid @RequestBody PoljePopunjenoDTO poljePopunjenoDTO) {
+        Optional<FormularPopunjen> formularPopunjen = formularPopunjenServisServis.nadjiKrozId(poljePopunjenoDTO.getIdFormularPopunjen());
+        Optional<Polje> polje = poljeServis.nadjiKrozId(poljePopunjenoDTO.getIdPolje());
         if (poljePopunjenoServis.nadjiKrozId(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        poljePopunjeno.setId(id);
-        PoljePopunjeno azuriranoPopunjenoPolje = poljePopunjenoServis.azuriraj(poljePopunjeno);
+        PoljePopunjeno azuriranoPopunjenoPolje = poljePopunjenoServis.azuriraj(poljePopunjenoDTO, formularPopunjen, polje, id);
         return ResponseEntity.ok(azuriranoPopunjenoPolje);
     }
 

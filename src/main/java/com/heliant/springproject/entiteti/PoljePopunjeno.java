@@ -20,10 +20,10 @@ public class PoljePopunjeno {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "vrednost_tekst", nullable = false)
+    @Column(name = "vrednost_tekst")
     private String vrednostTekst;
 
-    @Column(name = "vrednost_broj", nullable = false)
+    @Column(name = "vrednost_broj")
     private Double vrednostBroj;
 
     @Column(name = "vreme_kreiranja", nullable = false)
@@ -33,10 +33,10 @@ public class PoljePopunjeno {
     private LocalDateTime vremeIzmene;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_formular_popunjen")
+    @JoinColumn(name = "id_formular_popunjen", nullable = false)
     private FormularPopunjen formularPopunjen;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_polje")
+    @JoinColumn(name = "id_polje", nullable = false)
     private Polje polje;
 }

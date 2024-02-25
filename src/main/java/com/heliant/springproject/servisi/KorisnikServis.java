@@ -21,6 +21,11 @@ public class KorisnikServis {
     public List<Korisnik> nadjiSve() {
         return korisnikRepozitorijum.findAll();
     }
+
+    @Transactional(readOnly = true)
+    public Optional<Korisnik> nadjiPremaKorisnickomImenu(String korisnickoIme) {
+        return korisnikRepozitorijum.findByUsername(korisnickoIme);
+    }
     @Transactional(readOnly = true)
     public Optional<Korisnik> nadjiKrozId(Long id) {
         return korisnikRepozitorijum.findById(id);
