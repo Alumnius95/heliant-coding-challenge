@@ -29,7 +29,8 @@ public record PoljeDTO(
         @Valid
         Set<PoljePopunjenoDTO> poljaPopunjenaDTO
 ) {
-    public static Polje dtoUOriginal(PoljeDTO poljeDTO, Polje polje) {
+    public static Polje dtoUOriginal(PoljeDTO poljeDTO) {
+        Polje polje = new Polje();
         polje.setNaziv(poljeDTO.naziv());
         polje.setPrikazniRedosled(poljeDTO.prikazniRedosled());
         polje.setTip(poljeDTO.tip());
@@ -37,7 +38,7 @@ public record PoljeDTO(
         polje.setVremePoslednjeIzmene(LocalDateTime.now());
         if (!poljeDTO.poljaPopunjenaDTO().isEmpty()) {
             Set<PoljePopunjeno> popunjenaPolja = poljeDTO.poljaPopunjenaDTO().stream()
-                    .map(poljePopunjenoDTO -> PoljePopunjenoDTO.dtoUOriginal(poljePopunjenoDTO, new PoljePopunjeno()))
+                    .map(PoljePopunjenoDTO::dtoUOriginal)
                     .collect(Collectors.toSet());
             polje.setPopunjenaPolja(popunjenaPolja);
         }

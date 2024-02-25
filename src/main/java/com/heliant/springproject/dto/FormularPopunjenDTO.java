@@ -19,11 +19,12 @@ public record FormularPopunjenDTO(
         @NotEmpty(message = "Makar jedno popunjeno polje je potrebno za popunjen formular")
         Set<PoljePopunjenoDTO> poljaPopunjenaDTO
 ) {
-    public static FormularPopunjen dtoUOriginal(FormularPopunjenDTO formularPopunjenDTO, FormularPopunjen formularPopunjen) {
+    public static FormularPopunjen dtoUOriginal(FormularPopunjenDTO formularPopunjenDTO) {
+        FormularPopunjen formularPopunjen = new FormularPopunjen();
         formularPopunjen.setVremeKreiranja(LocalDateTime.now());
         formularPopunjen.setVremeIzmene(LocalDateTime.now());
         Set<PoljePopunjeno> popunjenaPolja = formularPopunjenDTO.poljaPopunjenaDTO().stream()
-                .map(poljePopunjenoDTO -> PoljePopunjenoDTO.dtoUOriginal(poljePopunjenoDTO, new PoljePopunjeno()))
+                .map(poljePopunjenoDTO -> PoljePopunjenoDTO.dtoUOriginal(poljePopunjenoDTO))
                 .collect(Collectors.toSet());
         formularPopunjen.setPopunjenaPolja(popunjenaPolja);
         return formularPopunjen;

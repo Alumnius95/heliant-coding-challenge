@@ -21,12 +21,13 @@ public record FormularDTO(
         Set<PoljeDTO> poljaDto
 ) {
 
-    public static Formular dtoUOriginal(FormularDTO formularDTO, Formular formular) {
+    public static Formular dtoUOriginal(FormularDTO formularDTO) {
+        Formular formular = new Formular();
         formular.setNaziv(formularDTO.naziv());
         formular.setVremeKreiranja(LocalDateTime.now());
         formular.setVremeIzmene(LocalDateTime.now());
         Set<Polje> polja = formularDTO.poljaDto().stream()
-                .map(poljeDTO -> PoljeDTO.dtoUOriginal(poljeDTO, new Polje()))
+                .map(PoljeDTO::dtoUOriginal)
                 .collect(Collectors.toSet());
         polja.forEach(polje -> polje.setFormular(formular));
         formular.setPolja(polja);

@@ -25,7 +25,8 @@ public record KorisnikDTO(
         String specijalniKljuc
 
 ) {
-    public static Korisnik dtoUOriginal(KorisnikDTO dto, Korisnik korisnik) {
+    public static Korisnik dtoUOriginal(KorisnikDTO dto) {
+        Korisnik korisnik = new Korisnik();
         korisnik.setKorisnickoIme(dto.korisnickoIme());
         korisnik.setLozinka(dto.lozinka());
         LocalDateTime now = LocalDateTime.now();

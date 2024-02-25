@@ -38,15 +38,15 @@ public class FormularPopunjenServis {
         if (formular.isEmpty()) {
             throw new FormularPopunjenIzuzetak("FormularPopunjen mora biti vezan za validan/postojeci formular!");
         }
-        for (PoljePopunjenoDTO poljePopunjenoDTO: formularPopunjenDTO.getPoljaPopunjenaDTO()){
-            Optional<Polje> polje = poljeServis.nadjiKrozId(poljePopunjenoDTO.getIdPolje());
+        for (PoljePopunjenoDTO poljePopunjenoDTO: formularPopunjenDTO.poljaPopunjenaDTO()){
+            Optional<Polje> polje = poljeServis.nadjiKrozId(poljePopunjenoDTO.idPolje());
             if (polje.isEmpty()) {
                 throw new PoljePopunjenoBezPoljaIzuzetak("Popunjeno polje mora biti vezano za postojeci ID polja!");
             }
             proveriSlaganjeTipova(poljePopunjenoDTO, polje.get());
         }
         FormularPopunjen formularPopunjen = FormularPopunjenDTO.
-                dtoUOriginal(formularPopunjenDTO, new FormularPopunjen());
+                dtoUOriginal(formularPopunjenDTO);
         formularPopunjen.setFormular(formular.get());
         formular.get().getPopunjeniFormulari().add(formularPopunjen);
         return formularPopunjenRepozitorijum.save(formularPopunjen);
@@ -64,7 +64,7 @@ public class FormularPopunjenServis {
             }
             proveriSlaganjeTipova(poljePopunjenoDTO, polje.get());
         }
-        FormularPopunjen formularPopunjen = FormularPopunjenDTO.dtoUOriginal(formularPopunjenDTO, new FormularPopunjen());
+        FormularPopunjen formularPopunjen = FormularPopunjenDTO.dtoUOriginal(formularPopunjenDTO);
         boolean validno = formularPopunjen.getPopunjenaPolja().stream().allMatch(poljePopunjeno ->
                 formular.get().getPolja().stream().anyMatch(polje ->
                         (polje.getTip() == Tip.TEXT && poljePopunjeno.getVrednostTekst() != null && poljePopunjeno.getVrednostBroj() == null) ||
@@ -92,11 +92,11 @@ public class FormularPopunjenServis {
 
     private static void proveriSlaganjeTipova(PoljePopunjenoDTO poljePopunjenoDTO, Polje polje) {
         if (polje.getTip() == Tip.TEXT) {
-            if (poljePopunjenoDTO.getVrednostTekst() == null || poljePopunjenoDTO.getVrednostBroj() != null) {
+            if (poljePopunjenoDTO.vrednostTekst() == null || poljePopunjenoDTO.vrednostBroj() != null) {
                 throw new NevalidnoSlaganjeTipovaPoljaIzuzetak("Popunjeno polje ima unet razlicit tip vrednosti od parent polja - MORA TEXT");
             }
         } else if (polje.getTip() == Tip.BROJ) {
-            if (poljePopunjenoDTO.getVrednostTekst() != null || poljePopunjenoDTO.getVrednostBroj() == null) {
+            if (poljePopunjenoDTO.vrednostTekst() != null || poljePopunjenoDTO.vrednostBroj() == null) {
                 throw new NevalidnoSlaganjeTipovaPoljaIzuzetak("Popunjeno polje ima unet razlicit tip vrednosti od parent polja - MORA BROJ");
             }
         }

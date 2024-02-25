@@ -14,10 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
-
-import static com.heliant.springproject.dto.FormularDTO.dtoUOriginal;
 
 @Service
 @AllArgsConstructor
@@ -42,7 +39,7 @@ public class FormularServis {
         String korisnickoIme = authentication.getName();
         Korisnik kreator = korisnikServis.nadjiPremaKorisnickomImenu(korisnickoIme)
                 .orElseThrow(() -> new KorisnickoImeIzuzetak("Korisnik sa ovim korisnickim imenom nije nadjen: " + korisnickoIme));
-        Formular formular = dtoUOriginal(formularDTO, new Formular());
+        Formular formular = FormularDTO.dtoUOriginal(formularDTO);
         formular.setKorisnikKreirao(kreator);
         formular.setKorisnikAzurirao(kreator);
         return formularRepozitorijum.save(formular);
@@ -54,7 +51,7 @@ public class FormularServis {
         String korisnickoIme = authentication.getName();
         Korisnik korisnikKojiMenja = korisnikServis.nadjiPremaKorisnickomImenu(korisnickoIme)
                 .orElseThrow(() -> new KorisnickoImeIzuzetak("Korisnik sa ovim korisnickim imenom nije nadjen: " + korisnickoIme));
-        Formular formular = dtoUOriginal(formularDTO, new Formular());
+        Formular formular = FormularDTO.dtoUOriginal(formularDTO);
         formular.setId(id);
         formular.setVremeIzmene(LocalDateTime.now());
         formular.setKorisnikAzurirao(korisnikKojiMenja);

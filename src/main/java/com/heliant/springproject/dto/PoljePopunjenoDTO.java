@@ -17,7 +17,8 @@ public record PoljePopunjenoDTO(
         Double vrednostBroj
 ) {
 
-    public static PoljePopunjeno dtoUOriginal(PoljePopunjenoDTO poljePopunjenoDTO, PoljePopunjeno poljePopunjeno) {
+    public static PoljePopunjeno dtoUOriginal(PoljePopunjenoDTO poljePopunjenoDTO) {
+        PoljePopunjeno poljePopunjeno = new PoljePopunjeno();
         poljePopunjeno.setVrednostBroj(poljePopunjenoDTO.vrednostBroj());
         poljePopunjeno.setVrednostTekst(poljePopunjenoDTO.vrednostTekst());
         poljePopunjeno.setVremeKreiranja(LocalDateTime.now());

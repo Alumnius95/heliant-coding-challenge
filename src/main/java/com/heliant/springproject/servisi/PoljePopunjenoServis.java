@@ -43,7 +43,7 @@ public class PoljePopunjenoServis {
             throw new PoljePopunjenoBezPoljaIzuzetak("PoljePopunjeno ne moze biti kreirano/sacuvano bez polja kojem pripada!");
         }
         proveriSlaganjeTipova(poljePopunjenoDTO, polje.get());
-        PoljePopunjeno poljePopunjeno = PoljePopunjenoDTO.dtoUOriginal(poljePopunjenoDTO, new PoljePopunjeno());
+        PoljePopunjeno poljePopunjeno = PoljePopunjenoDTO.dtoUOriginal(poljePopunjenoDTO);
         poljePopunjeno.setFormularPopunjen(formularPopunjen.get());
         formularPopunjen.get().getPopunjenaPolja().add(poljePopunjeno);
         formularPopunjen.get().setVremeIzmene(LocalDateTime.now());
@@ -61,7 +61,7 @@ public class PoljePopunjenoServis {
         }
         proveriSlaganjeTipova(poljePopunjenoDTO, polje.get());
 
-        PoljePopunjeno poljePopunjeno = PoljePopunjenoDTO.dtoUOriginal(poljePopunjenoDTO, new PoljePopunjeno());
+        PoljePopunjeno poljePopunjeno = PoljePopunjenoDTO.dtoUOriginal(poljePopunjenoDTO);
         poljePopunjeno.setFormularPopunjen(formularPopunjen.get());
         poljePopunjeno.setId(id);
         poljePopunjeno.setVremeIzmene(LocalDateTime.now());

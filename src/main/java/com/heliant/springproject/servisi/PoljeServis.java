@@ -17,8 +17,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static com.heliant.springproject.dto.PoljeDTO.dtoUOriginal;
-
 @Service
 @AllArgsConstructor
 public class PoljeServis {
@@ -42,7 +40,7 @@ public class PoljeServis {
             throw new PoljeBezFormularaIzuzetak("Polje ne moze biti azurirano/kreirano/sacuvano bez postojeceg formulara!");
         }
         proveriSlaganjeTipova(poljeDTO);
-        Polje polje = PoljeDTO.dtoUOriginal(poljeDTO, new Polje());
+        Polje polje = PoljeDTO.dtoUOriginal(poljeDTO);
         polje.setVremeKreiranja(LocalDateTime.now());
         return poljeRepozitorijum.save(polje);
     }
@@ -53,12 +51,12 @@ public class PoljeServis {
             throw new PoljeBezFormularaIzuzetak("Polje ne moze biti azurirano/kreirano/sacuvano bez postojeceg formulara!");
         }
         proveriSlaganjeTipova(poljeDTO);
-        Polje polje = dtoUOriginal(poljeDTO, new Polje());
+        Polje polje = PoljeDTO.dtoUOriginal(poljeDTO);
         polje.setId(id);
         formular.ifPresent(polje::setFormular);
         polje.setVremePoslednjeIzmene(LocalDateTime.now());
         formular.get().setVremeIzmene(LocalDateTime.now());
-        formular.get().getPolja().removeIf(polje1 -> polje1.getId().equals(id) && (!polje1.getNaziv().equals(poljeDTO.getNaziv())
+        formular.get().getPolja().removeIf(polje1 -> polje1.getId().equals(id) && (!polje1.getNaziv().equals(poljeDTO.naziv())
         || !polje1.getTip().equals(poljeDTO.tip())));
         formular.get().getPolja().add(polje);
         return poljeRepozitorijum.save(polje);

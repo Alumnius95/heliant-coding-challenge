@@ -35,8 +35,8 @@ public class KorisnikKontroler {
 
     @PostMapping
     public ResponseEntity<Korisnik> kreirajKorisnika(@Valid @RequestBody KorisnikDTO korisnikDTO) {
-        if (validirajSpecijalniKljuc(korisnikDTO.getSpecijalniKljuc())) {
-            Korisnik korisnik = dtoUOriginal(korisnikDTO, new Korisnik());
+        if (validirajSpecijalniKljuc(korisnikDTO.specijalniKljuc())) {
+            Korisnik korisnik = dtoUOriginal(korisnikDTO);
             Korisnik sacuvanKorisnik = korisnikServis.sacuvaj(korisnik);
             return ResponseEntity.status(HttpStatus.CREATED).body(sacuvanKorisnik);
         }
@@ -48,8 +48,8 @@ public class KorisnikKontroler {
         if (korisnikServis.nadjiKrozId(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        if (validirajSpecijalniKljuc(korisnikDTO.getSpecijalniKljuc())) {
-            Korisnik postojeciKorisnik = dtoUOriginal(korisnikDTO, korisnikServis.nadjiKrozId(id).get());
+        if (validirajSpecijalniKljuc(korisnikDTO.specijalniKljuc())) {
+            Korisnik postojeciKorisnik = dtoUOriginal(korisnikDTO);
             postojeciKorisnik.setId(id);
             Korisnik azuriranKorisnik = korisnikServis.azuriraj(postojeciKorisnik);
             return ResponseEntity.ok(azuriranKorisnik);
