@@ -1,15 +1,11 @@
 package com.heliant.springproject.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.NotBlank;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class LoginDTO {
-    private String korisnickoIme;
-    private String lozinka;
-}
+public record LoginDTO(
+        @NotBlank(message = "Korisnicko ime je neophodno za login")
+        String korisnickoIme,
+
+        @NotBlank(message = "Lozinka je neophodna za login")
+         String lozinka
+) {}
