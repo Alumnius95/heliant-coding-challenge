@@ -6,6 +6,8 @@ import com.heliant.springproject.entiteti.Korisnik;
 import com.heliant.springproject.izuzeci.KorisnickoImeIzuzetak;
 import com.heliant.springproject.repozitorijumi.FormularRepozitorijum;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -25,8 +27,8 @@ public class FormularServis {
     private final FormularRepozitorijum formularRepozitorijum;
 
     @Transactional(readOnly = true)
-    public List<Formular> nadjiSve() {
-        return formularRepozitorijum.findAll();
+    public Page<Formular> nadjiSve(Pageable pageable) {
+        return formularRepozitorijum.findAll(pageable);
     }
 
     @Transactional(readOnly = true)

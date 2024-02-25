@@ -5,6 +5,10 @@ import com.heliant.springproject.entiteti.Formular;
 import com.heliant.springproject.servisi.FormularServis;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +24,12 @@ public class FormularKontroler {
     private final FormularServis formularServis;
 
     @GetMapping
-    public ResponseEntity<List<Formular>> dohvatiSveFormulare() {
-        return ResponseEntity.ok(formularServis.nadjiSve());
+    public ResponseEntity<Page<Formular>> dohvatiSveFormulare(@RequestParam(value = "page", defaultValue = "0") int page,
+                                                              @RequestParam(value = "size", defaultValue = "10") int size,
+                                                              @RequestParam(value = "sort", defaultValue = "id,desc") String sort) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sort.split(",")));
+        Page<Formular> formulari = formularServis.nadjiSve(pageable);
+        return ResponseEntity.ok(formulari);
     }
 
     @GetMapping("/{id}")
