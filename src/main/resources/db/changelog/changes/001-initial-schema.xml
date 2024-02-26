@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
+
+    <!-- Tabela Korisnik -->
+    <changeSet id="1" author="Dusan">
+        <createTable tableName="Korisnik">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="korisnicko_ime" type="VARCHAR(256)"/>
+            <column name="lozinka" type="VARCHAR(256)"/>
+            <column name="rola" type="ENUM('ROLE_ADMIN', 'ROLE_RADNIK')"/>
+            <column name="vreme_kreiranja" type="TIMESTAMP"/>
+            <column name="vreme_poslednje_izmene" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <!-- Tabela Formular -->
+    <changeSet id="2" author="Dusan">
+        <createTable tableName="Formular">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="naziv" type="VARCHAR(256)"/>
+            <column name="vreme_kreiranja" type="TIMESTAMP"/>
+            <column name="vreme_poslednje_izmene" type="TIMESTAMP"/>
+            <column name="id_korisnik_kreirao" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="id_korisnik_poslednji_azurirao" type="INT">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- Tabela Polje -->
+    <changeSet id="3" author="Dusan">
+        <createTable tableName="Polje">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="id_formular" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="naziv" type="VARCHAR(256)"/>
+            <column name="prikazni_redosled" type="INT"/>
+            <column name="tip" type="ENUM('TEXT', 'NUMBER')"/>
+            <column name="vreme_kreiranja" type="TIMESTAMP"/>
+            <column name="vreme_poslednje_izmene" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <!-- Tabela Formular_Popunjen -->
+    <changeSet id="4" author="Dusan">
+        <createTable tableName="Formular_Popunjen">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="id_formular" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="vreme_kreiranja" type="TIMESTAMP"/>
+            <column name="vreme_poslednje_izmene" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <!-- Tabela Polje_Popunjeno -->
+    <changeSet id="5" author="Dusan">
+        <createTable tableName="Polje_Popunjeno">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="id_formular_popunjen" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_polje" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="vrednost_tekst" type="VARCHAR(256)"/>
+            <column name="vrednost_broj" type="DOUBLE"/>
+            <column name="vreme_kreiranja" type="TIMESTAMP"/>
+            <column name="vreme_poslednje_izmene" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <!-- Tabela Statistika -->
+    <changeSet id="6" author="Dusan">
+        <createTable tableName="Statistika">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="datum" type="DATE"/>
+            <column name="broj_popunjenih_formulara" type="INT"/>
+        </createTable>
+    </changeSet>
+
+    <!-- Spoljni kljucevi -->
+    <changeSet id="7" author="Dusan">
+        <addForeignKeyConstraint constraintName="fk_formular_korisnik_kreirao"
+                                 baseTableName="Formular"
+                                 baseColumnNames="id_korisnik_kreirao"
+                                 referencedTableName="Korisnik"
+                                 referencedColumnNames="id"
+                                 onDelete="SET NULL"/>
+        <addForeignKeyConstraint constraintName="fk_formular_korisnik_azurirao"
+                                 baseTableName="Formular"
+                                 baseColumnNames="id_korisnik_poslednji_azurirao"
+                                 referencedTableName="Korisnik"
+                                 referencedColumnNames="id"
+                                 onDelete="SET NULL"/>
+        <addForeignKeyConstraint constraintName="fk_polje_formular"
+                                 baseTableName="Polje"
+                                 baseColumnNames="id_formular"
+                                 referencedTableName="Formular"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_formular_popunjen_formular"
+                                 baseTableName="Formular_Popunjen"
+                                 baseColumnNames="id_formular"
+                                 referencedTableName="Formular"
+                                 referencedColumnNames="id"
+                                 onDelete="SET NULL"/>
+        <addForeignKeyConstraint constraintName="fk_polje_popunjeno_formular_popunjen"
+                                 baseTableName="polje_popunjeno"
+                                 baseColumnNames="id_formular_popunjen"
+                                 referencedTableName="formular_popunjen"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_polje_popunjeno_polje"
+                                 baseTableName="Polje_Popunjeno"
+                                 baseColumnNames="id_polje"
+                                 referencedTableName="polje"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>
