@@ -22,7 +22,9 @@ import java.util.Optional;
 public class FormularPopunjenServis {
 
     private final FormularPopunjenRepozitorijum formularPopunjenRepozitorijum;
+
     private final PoljeServis poljeServis;
+
     @Transactional(readOnly = true)
     public List<FormularPopunjen> nadjiSve() {
         return formularPopunjenRepozitorijum.findAll();
@@ -38,7 +40,7 @@ public class FormularPopunjenServis {
         if (formular.isEmpty()) {
             throw new FormularPopunjenIzuzetak("FormularPopunjen mora biti vezan za validan/postojeci formular!");
         }
-        for (PoljePopunjenoDTO poljePopunjenoDTO: formularPopunjenDTO.poljaPopunjenaDTO()){
+        for (PoljePopunjenoDTO poljePopunjenoDTO : formularPopunjenDTO.poljaPopunjenaDTO()) {
             Optional<Polje> polje = poljeServis.nadjiKrozId(poljePopunjenoDTO.idPolje());
             if (polje.isEmpty()) {
                 throw new PoljePopunjenoBezPoljaIzuzetak("Popunjeno polje mora biti vezano za postojeci ID polja!");
@@ -57,7 +59,7 @@ public class FormularPopunjenServis {
         if (formular.isEmpty()) {
             throw new FormularPopunjenIzuzetak("FormularPopunjen mora biti vezan za validan/postojeci formular!");
         }
-        for (PoljePopunjenoDTO poljePopunjenoDTO: formularPopunjenDTO.poljaPopunjenaDTO()){
+        for (PoljePopunjenoDTO poljePopunjenoDTO : formularPopunjenDTO.poljaPopunjenaDTO()) {
             Optional<Polje> polje = poljeServis.nadjiKrozId(poljePopunjenoDTO.idPolje());
             if (polje.isEmpty()) {
                 throw new PoljePopunjenoBezPoljaIzuzetak("Popunjeno polje mora biti vezano za postojeci ID polja!");
@@ -72,9 +74,11 @@ public class FormularPopunjenServis {
                 )
         );
         if (!validno) {
-            throw new NevalidnoSlaganjeTipovaPoljaIzuzetak("Pri azuriranju formulara podesili ste formular na tip" +
-                    "koji ne sadrzi tipove polja koje vasa popunjena forma sadrzi ili ste ostavili istu formu (FK) i" +
-                    "azurirali popunjena polja gde je neko od njih mismatch sa tom postojecom formom");
+            throw new NevalidnoSlaganjeTipovaPoljaIzuzetak("""
+                    Pri azuriranju formulara podesili ste formular na tip
+                    koji ne sadrzi tipove polja koje vasa popunjena forma sadrzi ili ste ostavili istu formu (FK) i
+                    azurirali popunjena polja gde je neko od njih mismatch sa tom postojecom formom
+                    """);
         }
         formularPopunjen.setId(id);
         formularPopunjen.setVremeIzmene(LocalDateTime.now());
