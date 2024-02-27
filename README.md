@@ -13,9 +13,11 @@ Od pomenutih zahteva zadatka u komitovima se nalaze:
 + Korićenje MySQLa (odnosno MySQL drivera uz liquibase)
 + omogućena je autentifikacija korišćenjem JWT tokena
 + implementeriane su CRUD operacije za definisane entitete
++ enkripcija lozinke (BCrypt)
++ endpoint za kreiranje korisnika uz specijalni ključ (dodatno mimo zahteva zadataka)
 + implementirana je validacija (uz anotacije i definisane izuzetke za specijalne slučajeve)
 + kreiran je task koji svakog dana u ponoć prebrojava popunjene formulare prethodnog dana
-+ ubačena su dodatna polja i podešeno njihovo automatsko setovanje
++ ubačena su dodatna polja i podešeno njihovo automatsko setovanje (id_korisnik_kreirao, id_korisnik_poslednji_azurirao)
 + korišćenje liquibase-a
 + implementirana je autorizacija korisnika (i definisane role i ograničenja kroz njih: ADMIN i RADNIK)
 + implementirana je paginacija pri dohvatanju svih formulara
