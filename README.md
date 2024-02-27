@@ -20,3 +20,5 @@ Od pomenutih zahteva zadatka u komitovima se nalaze:
 + implementirana je autorizacija korisnika (i definisane role i ograničenja kroz njih: ADMIN i RADNIK)
 + implementirana je paginacija pri dohvatanju svih formulara
 
+Detaljniji opis koda je u README fajlu feature/form-management-system grane.
+
